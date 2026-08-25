@@ -1,0 +1,78 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://engine/world/player_controller.gd" id="1_player"]
+[ext_resource type="Script" path="res://engine/world/spawn_point.gd" id="2_spawn"]
+[ext_resource type="Script" path="res://engine/world/camera_zone.gd" id="3_zone"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_floor"]
+size = Vector3(20, 0.2, 10)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_test"]
+vertices = PackedVector3Array(-10, 0, -5, 10, 0, -5, 10, 0, 5, -10, 0, 5)
+polygons = [PackedInt32Array(0, 1, 2, 3)]
+
+[sub_resource type="BoxShape3D" id="BoxShape_zone"]
+size = Vector3(9, 3, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+size = Vector3(20, 0.1, 10)
+
+[node name="WorldEngineTest" type="Node3D"]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_test")
+
+[node name="WalkableFloor" type="StaticBody3D" parent="."]
+collision_layer = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WalkableFloor"]
+shape = SubResource("BoxShape_floor")
+position = Vector3(0, -0.1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WalkableFloor"]
+mesh = SubResource("BoxMesh_floor")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+position = Vector3(-7, 0.5, 0)
+script = ExtResource("1_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("BoxShape_zone")
+scale = Vector3(0.12, 0.25, 0.12)
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Player"]
+path_desired_distance = 0.15
+target_desired_distance = 0.15
+
+[node name="EntryA" type="Marker3D" parent="."]
+position = Vector3(-7, 0.5, 0)
+script = ExtResource("2_spawn")
+spawn_id = &"area_a"
+
+[node name="EntryB" type="Marker3D" parent="."]
+position = Vector3(7, 0.5, 0)
+script = ExtResource("2_spawn")
+spawn_id = &"area_b"
+
+[node name="CameraA" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.94, 0.342, 0, -0.342, 0.94, -7, 7, 10)
+current = true
+
+[node name="CameraB" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.94, 0.342, 0, -0.342, 0.94, 7, 7, 10)
+
+[node name="CameraZoneA" type="Area3D" parent="."]
+position = Vector3(-5, 1, 0)
+script = ExtResource("3_zone")
+camera_path = NodePath("../CameraA")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CameraZoneA"]
+shape = SubResource("BoxShape_zone")
+
+[node name="CameraZoneB" type="Area3D" parent="."]
+position = Vector3(5, 1, 0)
+script = ExtResource("3_zone")
+camera_path = NodePath("../CameraB")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CameraZoneB"]
+shape = SubResource("BoxShape_zone")

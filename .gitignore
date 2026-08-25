@@ -1,0 +1,7 @@
+.godot/
+.import/
+*.tmp
+*.log
+.vscode/
+__pycache__/
+*.py[cod]
