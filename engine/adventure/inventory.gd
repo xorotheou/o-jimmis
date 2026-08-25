@@ -16,12 +16,19 @@ func register_definition(definition) -> void:
 	_definitions[definition.item_id] = definition
 
 func add_item(item_id: StringName, quantity := 1) -> bool:
-	if quantity <= 0 or not _definitions.has(item_id):
-		return false
-	if not _definitions[item_id].stackable and has_item(item_id):
+	if not can_add_item(item_id, quantity):
 		return false
 	_quantities[item_id] = get_quantity(item_id) + quantity
 	item_added.emit(item_id, quantity)
+	return true
+
+func can_add_item(item_id: StringName, quantity := 1) -> bool:
+	if quantity <= 0 or not _definitions.has(item_id):
+		return false
+	if not _definitions[item_id].stackable and quantity != 1:
+		return false
+	if not _definitions[item_id].stackable and has_item(item_id):
+		return false
 	return true
 
 func remove_item(item_id: StringName, quantity := 1) -> bool:
@@ -59,7 +66,13 @@ func combine(first_item_id: StringName, second_item_id: StringName) -> StringNam
 	var result_id: StringName = StringName(first.result_for(second_item_id))
 	if result_id.is_empty() or not _definitions.has(result_id):
 		return &""
+	if not can_add_item(result_id, 1):
+		return &""
+	if first_item_id == second_item_id and get_quantity(first_item_id) < 2:
+		return &""
+	var snapshot := snapshot()
 	if not remove_item(first_item_id) or not remove_item(second_item_id) or not add_item(result_id):
+		restore(snapshot)
 		return &""
 	items_combined.emit(first_item_id, second_item_id, result_id)
 	return result_id

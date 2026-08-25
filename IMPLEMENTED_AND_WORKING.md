@@ -14,6 +14,10 @@ Living status file for the engine. Keep this current whenever something lands, r
 - `Story` owns flags, variables, and world-state data.
 - `Save` writes and restores the versioned save envelope.
 - `DebugTools` exposes a read-only inspection surface for runtime state and recent log summaries.
+- Authored location definitions live in the world service registry instead of `GameState`.
+- Save restore fails cleanly when the requested location cannot be restored.
+- Deterministic action batches roll back Story and Inventory when a later action fails.
+- Inventory combinations validate the output before mutating source items.
 - The internal test world loads correctly.
 - The player controller moves via `NavigationAgent3D`.
 - Click-to-move targeting works from the active camera.
@@ -37,10 +41,7 @@ Living status file for the engine. Keep this current whenever something lands, r
 
 ## Partial
 
-- `World.register_location()` stores authored location definitions in `GameState`, which makes runtime state and authored content share the same snapshot boundary.
-- `Save._restore()` does not currently verify whether `World.load_location()` succeeded before returning `OK`.
-- `AdventureActionExecutor.execute()` applies actions sequentially without rollback, so a later failure can leave earlier mutations applied.
-- `Inventory.combine()` can consume the source items before it knows whether the result item can be added.
+- None currently confirmed by the latest automated validation and smoke tests.
 
 ## Broken
 
@@ -50,7 +51,7 @@ Living status file for the engine. Keep this current whenever something lands, r
 
 - `python3 scripts/validate_project.py`
 - `python3 -m unittest discover -s tests -v`
-- Headless smoke scenes for world, save, interaction, inventory, quest, quest save, NPC, location, interaction+inventory, and log rotation
+- Headless smoke scenes for world, save, interaction, inventory, quest, quest save, NPC, location, interaction+inventory, log rotation, and Phase 5A hardening
 - Headless launcher startup
 
 ## Notes

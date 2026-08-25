@@ -6,13 +6,20 @@ signal location_unloaded(location_id: StringName)
 
 var current_location_id: StringName
 var _current_location: Node
+var _location_definitions: Dictionary = {}
 
 func register_location(definition) -> void:
 	assert(definition.is_valid_definition(), "Location definitions need an id and an existing scene")
-	GameState.set_value(&"world/location_definitions/%s" % definition.location_id, definition)
+	_location_definitions[definition.location_id] = definition
+
+func has_location_definition(location_id: StringName) -> bool:
+	return _location_definitions.has(location_id)
+
+func get_location_definition(location_id: StringName) -> Variant:
+	return _location_definitions.get(location_id)
 
 func load_location(location_id: StringName, spawn_id: StringName = &"") -> bool:
-	var definition: Variant = GameState.get_value(&"world/location_definitions/%s" % location_id)
+	var definition: Variant = _location_definitions.get(location_id)
 	if definition == null:
 		Log.error("world", "Unknown location requested", {"location_id": location_id})
 		return false

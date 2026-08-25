@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://engine/world/spawn_point.gd" id="1_spawn"]
+
+[node name="Phase5HardeningLocation" type="Node3D"]
+
+[node name="SpawnPoint" type="Marker3D" parent="."]
+position = Vector3(2, 0, 0)
+script = ExtResource("1_spawn")
+spawn_id = &"hardening_start"

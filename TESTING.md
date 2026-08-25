@@ -71,6 +71,12 @@ To run the rolling two-run log smoke test:
 godot --headless --path /home/td/jimmis res://tests/smoke_log_rotation_test.tscn
 ```
 
+To run the Phase 5A hardening smoke test:
+
+```bash
+godot --headless --path /home/td/jimmis res://tests/smoke_phase5_hardening_test.tscn
+```
+
 The structured logger keeps a compact archive in `user://logs/` as `run_current.json` and `run_previous.json`. The current run is overwritten in place, and the previous run is replaced on the next startup so the last two runs stay available without unbounded growth.
 The in-editor test launcher at `engine/dev/test_launcher.tscn` includes a read-only log viewer with a text filter and an `Errors only` toggle so you can inspect the last two runs without opening the JSON files.
 
