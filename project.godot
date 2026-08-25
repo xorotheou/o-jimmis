@@ -1,0 +1,36 @@
+; Reusable point-and-click adventure engine foundation.
+config_version=5
+
+[application]
+config/name="Adventure Engine"
+run/main_scene="res://engine/bootstrap.tscn"
+config/features=PackedStringArray("4.3")
+
+[autoload]
+EngineConfig="*res://engine/core/engine_config.gd"
+GameEvents="*res://engine/core/game_events.gd"
+GameState="*res://engine/core/game_state.gd"
+Log="*res://engine/core/logger.gd"
+Services="*res://engine/core/service_registry.gd"
+DebugTools="*res://engine/debug/debug_tools.gd"
+World="*res://engine/world/world_manager.gd"
+Story="*res://engine/adventure/story_state.gd"
+Inventory="*res://engine/adventure/inventory.gd"
+Interaction="*res://engine/adventure/interaction_service.gd"
+Dialogue="*res://engine/adventure/dialogue_service.gd"
+Puzzles="*res://engine/adventure/puzzle_service.gd"
+Quests="*res://engine/adventure/quest_service.gd"
+Npcs="*res://engine/npc/npc_service.gd"
+Clock="*res://engine/npc/game_clock.gd"
+Save="*res://engine/save/save_service.gd"
+NpcConversation="*res://engine/ai/npc_conversation_service.gd"
+
+[display]
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/window_width_override=1280
+window/size/window_height_override=720
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
