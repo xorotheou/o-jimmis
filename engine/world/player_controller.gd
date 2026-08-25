@@ -36,10 +36,11 @@ func _physics_process(_delta: float) -> void:
 		_finish_destination()
 		return
 	var next_position := navigation_agent.get_next_path_position()
-	var direction := global_position.direction_to(next_position)
+	var flat_target := Vector3(next_position.x, global_position.y, next_position.z)
+	var direction := global_position.direction_to(flat_target)
 	velocity = direction * movement_speed
-	if not direction.is_zero_approx():
-		look_at(global_position + Vector3(direction.x, 0.0, direction.z), Vector3.UP, true)
+	if direction.length_squared() > 0.0001:
+		look_at(flat_target, Vector3.UP, true)
 	move_and_slide()
 	navigation_agent.velocity = velocity
 	if global_position.distance_to(_destination) <= arrival_distance:

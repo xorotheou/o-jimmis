@@ -7,12 +7,12 @@ signal location_unloaded(location_id: StringName)
 var current_location_id: StringName
 var _current_location: Node
 
-func register_location(definition: AdventureLocationDefinition) -> void:
+func register_location(definition) -> void:
 	assert(definition.is_valid_definition(), "Location definitions need an id and an existing scene")
 	GameState.set_value(&"world/location_definitions/%s" % definition.location_id, definition)
 
 func load_location(location_id: StringName, spawn_id: StringName = &"") -> bool:
-	var definition: AdventureLocationDefinition = GameState.get_value(&"world/location_definitions/%s" % location_id)
+	var definition: Variant = GameState.get_value(&"world/location_definitions/%s" % location_id)
 	if definition == null:
 		Log.error("world", "Unknown location requested", {"location_id": location_id})
 		return false
@@ -24,7 +24,7 @@ func load_location(location_id: StringName, spawn_id: StringName = &"") -> bool:
 	_current_location = packed_scene.instantiate()
 	get_tree().current_scene.add_child(_current_location)
 	current_location_id = location_id
-	var resolved_spawn := spawn_id if not spawn_id.is_empty() else definition.default_spawn_id
+	var resolved_spawn: StringName = spawn_id if not spawn_id.is_empty() else definition.default_spawn_id
 	_spawn_player(resolved_spawn)
 	location_loaded.emit(location_id)
 	return true

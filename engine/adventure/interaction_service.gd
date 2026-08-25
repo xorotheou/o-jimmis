@@ -1,15 +1,17 @@
 extends Node
 ## Resolves authored interactions without placing game logic in scene scripts.
 
+const AdventureActionExecutor = preload("res://engine/adventure/action_executor.gd")
+
 signal interaction_resolved(interaction_id: StringName, verb: StringName, response_text: String)
 var _definitions: Dictionary = {}
 
-func register_definition(definition: AdventureInteractionDefinition) -> void:
+func register_definition(definition) -> void:
 	assert(not definition.interaction_id.is_empty() and not definition.verb.is_empty(), "Interaction needs an id and verb")
 	_definitions["%s:%s" % [definition.interaction_id, definition.verb]] = definition
 
 func resolve(interaction_id: StringName, verb: StringName) -> String:
-	var definition: AdventureInteractionDefinition = _definitions.get("%s:%s" % [interaction_id, verb])
+	var definition: Variant = _definitions.get("%s:%s" % [interaction_id, verb])
 	if definition == null or not _conditions_met(definition.conditions):
 		return ""
 	if not AdventureActionExecutor.execute(definition.consequences):

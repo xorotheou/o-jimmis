@@ -1,6 +1,8 @@
 extends Node
 ## Authoritative item ownership and per-item state. Definitions stay content-owned.
 
+const ActionExecutor = preload("res://engine/adventure/action_executor.gd")
+
 signal item_added(item_id: StringName, quantity: int)
 signal item_removed(item_id: StringName, quantity: int)
 signal items_combined(first_item_id: StringName, second_item_id: StringName, result_item_id: StringName)
@@ -9,7 +11,7 @@ var _definitions: Dictionary = {}
 var _quantities: Dictionary = {}
 var _item_state: Dictionary = {}
 
-func register_definition(definition: AdventureItemDefinition) -> void:
+func register_definition(definition) -> void:
 	assert(definition.is_valid_definition(), "Inventory item definitions require an id and display name")
 	_definitions[definition.item_id] = definition
 
@@ -40,7 +42,7 @@ func get_quantity(item_id: StringName) -> int:
 	return int(_quantities.get(item_id, 0))
 
 func inspect_item(item_id: StringName) -> String:
-	var definition: AdventureItemDefinition = _definitions.get(item_id)
+	var definition: Variant = _definitions.get(item_id)
 	return definition.inspection_text if definition != null and has_item(item_id) else ""
 
 func set_item_state(item_id: StringName, state: Dictionary) -> void:
@@ -53,8 +55,8 @@ func get_item_state(item_id: StringName) -> Dictionary:
 func combine(first_item_id: StringName, second_item_id: StringName) -> StringName:
 	if not has_item(first_item_id) or not has_item(second_item_id):
 		return &""
-	var first: AdventureItemDefinition = _definitions[first_item_id]
-	var result_id := first.result_for(second_item_id)
+	var first: Variant = _definitions[first_item_id]
+	var result_id: StringName = StringName(first.result_for(second_item_id))
 	if result_id.is_empty() or not _definitions.has(result_id):
 		return &""
 	if not remove_item(first_item_id) or not remove_item(second_item_id) or not add_item(result_id):

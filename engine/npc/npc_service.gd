@@ -1,13 +1,15 @@
 extends Node
 ## NPC facts, relationships, memory, and schedules stay deterministic and local.
 
+const NpcProfile = preload("res://engine/npc/npc_profile.gd")
+
 signal relationship_changed(npc_id: StringName, value: int)
 signal npc_memory_added(npc_id: StringName, memory: String)
 var _profiles: Dictionary = {}
 var _relationships: Dictionary = {}
 var _memories: Dictionary = {}
 
-func register_profile(profile: AdventureNpcProfile) -> void:
+func register_profile(profile) -> void:
 	assert(not profile.npc_id.is_empty(), "NPC profile needs an id")
 	_profiles[profile.npc_id] = profile
 
@@ -23,14 +25,14 @@ func get_relationship(npc_id: StringName) -> int:
 
 func remember(npc_id: StringName, memory: String) -> void:
 	assert(_profiles.has(npc_id), "NPC must be registered")
-	if _profiles[npc_id].tier == AdventureNpcProfile.Tier.BACKGROUND: return
+	if _profiles[npc_id].tier == NpcProfile.Tier.BACKGROUND: return
 	var entries: Array = _memories.get(npc_id, [])
 	entries.append(memory)
 	_memories[npc_id] = entries.slice(-12)
 	npc_memory_added.emit(npc_id, memory)
 
 func fallback_line(npc_id: StringName) -> String:
-	var profile: AdventureNpcProfile = _profiles.get(npc_id)
+	var profile: Variant = _profiles.get(npc_id)
 	if profile == null or profile.fallback_lines.is_empty(): return ""
 	return profile.fallback_lines[0]
 

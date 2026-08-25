@@ -5,6 +5,7 @@ const PREFIX := "adventure_engine/"
 const DEFAULTS := {
 	"debug/enabled": true,
 	"logging/minimum_level": "info",
+	"logging/run_log_dir": "user://logs",
 	"save/version": 1,
 	"ai/enabled": false,
 }
