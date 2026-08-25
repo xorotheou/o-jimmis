@@ -13,8 +13,15 @@ func register_definition(definition) -> void:
 	assert(not definition.quest_id.is_empty(), "Quest needs an id")
 	_definitions[definition.quest_id] = definition
 
+func get_registered_quest_ids() -> Array[StringName]:
+	var ids: Array[StringName] = []
+	for quest_id in _definitions.keys():
+		ids.append(quest_id)
+	return ids
+
 func start(quest_id: StringName) -> bool:
-	if not _definitions.has(quest_id) or _states.has(quest_id): return false
+	if not _definitions.has(quest_id): return false
+	if _states.has(quest_id): return true
 	_states[quest_id] = {"started": true, "objectives": {}, "completed": false}
 	quest_started.emit(quest_id)
 	return true
@@ -22,7 +29,9 @@ func start(quest_id: StringName) -> bool:
 func complete_objective(quest_id: StringName, objective_id: StringName) -> bool:
 	var definition: Variant = _definitions.get(quest_id)
 	var state: Dictionary = _states.get(quest_id, {})
-	if definition == null or state.is_empty() or not definition.objective_ids.has(objective_id) or bool(state.completed): return false
+	if definition == null or state.is_empty() or bool(state.completed): return false
+	if not definition.objective_ids.has(objective_id) and not definition.optional_objective_ids.has(objective_id):
+		return false
 	state.objectives[objective_id] = true
 	_states[quest_id] = state
 	objective_completed.emit(quest_id, objective_id)

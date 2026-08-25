@@ -5,6 +5,7 @@ signal location_loaded(location_id: StringName)
 signal location_unloaded(location_id: StringName)
 
 var current_location_id: StringName
+var current_spawn_id: StringName
 var _current_location: Node
 var _location_definitions: Dictionary = {}
 
@@ -17,6 +18,12 @@ func has_location_definition(location_id: StringName) -> bool:
 
 func get_location_definition(location_id: StringName) -> Variant:
 	return _location_definitions.get(location_id)
+
+func get_registered_location_ids() -> Array[StringName]:
+	var ids: Array[StringName] = []
+	for location_id in _location_definitions.keys():
+		ids.append(location_id)
+	return ids
 
 func load_location(location_id: StringName, spawn_id: StringName = &"") -> bool:
 	var definition: Variant = _location_definitions.get(location_id)
@@ -32,6 +39,7 @@ func load_location(location_id: StringName, spawn_id: StringName = &"") -> bool:
 	get_tree().current_scene.add_child(_current_location)
 	current_location_id = location_id
 	var resolved_spawn: StringName = spawn_id if not spawn_id.is_empty() else definition.default_spawn_id
+	current_spawn_id = resolved_spawn
 	_spawn_player(resolved_spawn)
 	location_loaded.emit(location_id)
 	return true
@@ -43,6 +51,7 @@ func unload_current_location() -> void:
 	_current_location.queue_free()
 	_current_location = null
 	current_location_id = &""
+	current_spawn_id = &""
 	location_unloaded.emit(previous_id)
 
 func _spawn_player(spawn_id: StringName) -> void:

@@ -9,10 +9,11 @@ Living status file for the engine. Keep this current whenever something lands, r
 ## Working
 
 - Project bootstrap starts cleanly and registers the core autoload services.
+- The Phase 5 Jimmis vertical slice boots from `content/jimmis/bootstrap/jimmis_bootstrap.tscn` and registers authored content without hard-coding game identifiers into the engine.
 - Structured logging works in-memory, on console, and in the rolling two-run archive.
 - `GameState` stores serializable runtime values, publishes state changes, and snapshots/restores deeply.
 - `Story` owns flags, variables, and world-state data.
-- `Save` writes and restores the versioned save envelope.
+- `Save` writes and restores the versioned save envelope, including the current location spawn id.
 - `DebugTools` exposes a read-only inspection surface for runtime state and recent log summaries.
 - Authored location definitions live in the world service registry instead of `GameState`.
 - Save restore fails cleanly when the requested location cannot be restored.
@@ -38,6 +39,7 @@ Living status file for the engine. Keep this current whenever something lands, r
 - The launcher shows the last two run logs without opening JSON files.
 - The launcher can filter run logs by text and show errors only.
 - The rolling run log keeps only `run_current.json` and `run_previous.json`.
+- Phase 5 regression scenes cover content registration, inventory combination safety, dialogue state, save/load restoration, and the full Jimmis vertical slice.
 
 ## Partial
 
@@ -51,7 +53,7 @@ Living status file for the engine. Keep this current whenever something lands, r
 
 - `python3 scripts/validate_project.py`
 - `python3 -m unittest discover -s tests -v`
-- Headless smoke scenes for world, save, interaction, inventory, quest, quest save, NPC, location, interaction+inventory, log rotation, and Phase 5A hardening
+- Headless smoke scenes for world, save, interaction, inventory, quest, quest save, NPC, location, interaction+inventory, log rotation, Phase 5A hardening, and the new Phase 5 Jimmis content/dialogue/inventory/save/full-flow scenes
 - Headless launcher startup
 
 ## Notes

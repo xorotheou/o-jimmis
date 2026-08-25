@@ -15,6 +15,12 @@ func register_definition(definition) -> void:
 	assert(not definition.get_node(definition.start_node_id).is_empty(), "Dialogue start node is missing")
 	_definitions[definition.dialogue_id] = definition
 
+func get_registered_dialogue_ids() -> Array[StringName]:
+	var ids: Array[StringName] = []
+	for dialogue_id in _definitions.keys():
+		ids.append(dialogue_id)
+	return ids
+
 func start(dialogue_id: StringName) -> Dictionary:
 	_active_dialogue = _definitions.get(dialogue_id)
 	if _active_dialogue == null:

@@ -27,15 +27,16 @@ func load_game(path: String) -> Error:
 	return OK
 
 func _build_payload() -> Dictionary:
-	return {"version": CURRENT_VERSION, "location_id": World.current_location_id, "game_state": GameState.snapshot(), "story": Story.snapshot(), "inventory": Inventory.snapshot(), "puzzles": Puzzles.snapshot(), "quests": Quests.snapshot(), "npcs": Npcs.snapshot(), "time": Clock.minutes_since_midnight}
+	return {"version": CURRENT_VERSION, "location_id": World.current_location_id, "spawn_id": World.current_spawn_id, "game_state": GameState.snapshot(), "story": Story.snapshot(), "inventory": Inventory.snapshot(), "puzzles": Puzzles.snapshot(), "quests": Quests.snapshot(), "npcs": Npcs.snapshot(), "time": Clock.minutes_since_midnight}
 
 func _restore(payload: Dictionary) -> bool:
 	var location_id := StringName(payload.get("location_id", ""))
+	var spawn_id := StringName(payload.get("spawn_id", ""))
 	if not location_id.is_empty():
 		if not World.has_location_definition(location_id):
 			Log.error("save", "Save references unknown location", {"location_id": location_id})
 			return false
-		if not World.load_location(location_id):
+		if not World.load_location(location_id, spawn_id):
 			Log.error("save", "Failed to restore location from save", {"location_id": location_id})
 			return false
 	GameState.restore(payload.get("game_state", {}))

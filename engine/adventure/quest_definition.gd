@@ -5,4 +5,5 @@ extends Resource
 @export var quest_id: StringName
 @export var title := ""
 @export var objective_ids: Array[StringName] = []
+@export var optional_objective_ids: Array[StringName] = []
 @export var completion_actions: Array[Dictionary] = []

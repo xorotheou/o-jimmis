@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://content/jimmis/locations/church_exterior.gd" id="1_church_ext"]
+
+[node name="ChurchExterior" type="Node3D"]
+script = ExtResource("1_church_ext")

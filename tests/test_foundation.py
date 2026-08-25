@@ -61,7 +61,7 @@ class FoundationContractTests(unittest.TestCase):
         conversation = self.read("engine/ai/npc_conversation_service.gd")
         self.assertIn("CURRENT_VERSION", save)
         self.assertIn('"puzzles": Puzzles.snapshot()', save)
-        self.assertIn("World.load_location(location_id)", save)
+        self.assertIn("World.load_location(location_id, spawn_id)", save)
         self.assertIn("World.has_location_definition(location_id)", save)
         self.assertIn("return FAILED", save)
         self.assertNotIn("Story._flags =", save)

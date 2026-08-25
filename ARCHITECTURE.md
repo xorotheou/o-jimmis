@@ -21,9 +21,13 @@ Godot autoloads own the foundation lifecycle:
 
 `World` owns location scene lifetime and moves a grouped player to authored `AdventureSpawnPoint` nodes. `AdventurePlayerController` follows paths from `NavigationAgent3D`; click input is converted to a collision-layer-1 ground point by `AdventureClickToMoveController`. Fixed cameras are selected by `AdventureCameraZone`. The reusable internal fixture demonstrates two navigation-connected zones and two spawn points without defining any game setting.
 
+The current Phase 5 game entry point lives in `content/jimmis/bootstrap/`, where authored content registers locations, dialogue, inventory, quests, puzzles, and NPCs against the same generic services. `Save` now persists both the location id and the active spawn id so reloaded games return to the authored entry point.
+
 ## Extension direction
 
 Future layers will add world, adventure, save, and AI services behind the same event/state boundaries. Deterministic game services remain authoritative; AI integrations may only produce validated presentation responses.
+
+Game-specific bootstraps remain in `content/<game>/bootstrap/` so the engine can ship with different authored slices without changing reusable engine services.
 
 ## Adventure runtime
 

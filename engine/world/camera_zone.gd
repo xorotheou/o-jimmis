@@ -6,6 +6,8 @@ extends Area3D
 @onready var camera: Camera3D = get_node(camera_path)
 
 func _ready() -> void:
+	collision_layer = 2
+	collision_mask = 0
 	body_entered.connect(_on_body_entered)
 
 func _on_body_entered(body: Node3D) -> void:

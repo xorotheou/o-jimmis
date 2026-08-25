@@ -15,6 +15,12 @@ func register_definition(definition) -> void:
 	assert(definition.is_valid_definition(), "Inventory item definitions require an id and display name")
 	_definitions[definition.item_id] = definition
 
+func get_registered_item_ids() -> Array[StringName]:
+	var ids: Array[StringName] = []
+	for item_id in _definitions.keys():
+		ids.append(item_id)
+	return ids
+
 func add_item(item_id: StringName, quantity := 1) -> bool:
 	if not can_add_item(item_id, quantity):
 		return false

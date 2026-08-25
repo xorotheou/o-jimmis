@@ -3,7 +3,7 @@ config_version=5
 
 [application]
 config/name="Adventure Engine"
-run/main_scene="res://engine/bootstrap.tscn"
+run/main_scene="res://content/jimmis/bootstrap/jimmis_bootstrap.tscn"
 config/features=PackedStringArray("4.3")
 
 [autoload]

@@ -12,6 +12,12 @@ func register_definition(definition) -> void:
 	assert(not definition.puzzle_id.is_empty(), "Puzzle needs an id")
 	_definitions[definition.puzzle_id] = definition
 
+func get_registered_puzzle_ids() -> Array[StringName]:
+	var ids: Array[StringName] = []
+	for puzzle_id in _definitions.keys():
+		ids.append(puzzle_id)
+	return ids
+
 func update_progress(puzzle_id: StringName, update: Dictionary) -> bool:
 	var definition: Variant = _definitions.get(puzzle_id)
 	if definition == null or is_completed(puzzle_id) or not Interaction._conditions_met(definition.prerequisites):

@@ -77,6 +77,42 @@ To run the Phase 5A hardening smoke test:
 godot --headless --path /home/td/jimmis res://tests/smoke_phase5_hardening_test.tscn
 ```
 
+To run the Phase 5 content registration smoke test:
+
+```bash
+godot --headless --path /home/td/jimmis res://tests/smoke_phase5_content_test.tscn
+```
+
+To run the Phase 5 dialogue-state smoke test:
+
+```bash
+godot --headless --path /home/td/jimmis res://tests/smoke_phase5_dialogue_test.tscn
+```
+
+To run the Phase 5 inventory smoke test:
+
+```bash
+godot --headless --path /home/td/jimmis res://tests/smoke_phase5_inventory_test.tscn
+```
+
+To run the Phase 5 save/load smoke test:
+
+```bash
+godot --headless --path /home/td/jimmis res://tests/smoke_phase5_save_test.tscn
+```
+
+To run the Phase 5 full vertical-slice smoke test:
+
+```bash
+godot --headless --path /home/td/jimmis res://tests/smoke_phase5_full_vertical_slice_test.tscn
+```
+
+To run the full smoke sweep used for this branch:
+
+```bash
+bash -lc 'set -e; for scene in res://tests/smoke_world_test.tscn res://tests/smoke_save_test.tscn res://tests/smoke_interaction_test.tscn res://tests/smoke_inventory_test.tscn res://tests/smoke_quest_test.tscn res://tests/smoke_quest_save_test.tscn res://tests/smoke_npc_test.tscn res://tests/smoke_location_test.tscn res://tests/smoke_interaction_inventory_test.tscn res://tests/smoke_log_rotation_test.tscn res://tests/smoke_phase5_hardening_test.tscn res://tests/smoke_phase5_content_test.tscn res://tests/smoke_phase5_inventory_test.tscn res://tests/smoke_phase5_dialogue_test.tscn res://tests/smoke_phase5_save_test.tscn res://tests/smoke_phase5_full_vertical_slice_test.tscn; do /home/td/.local/bin/godot --headless --path /home/td/jimmis "$scene"; done'
+```
+
 The structured logger keeps a compact archive in `user://logs/` as `run_current.json` and `run_previous.json`. The current run is overwritten in place, and the previous run is replaced on the next startup so the last two runs stay available without unbounded growth.
 The in-editor test launcher at `engine/dev/test_launcher.tscn` includes a read-only log viewer with a text filter and an `Errors only` toggle so you can inspect the last two runs without opening the JSON files.
 

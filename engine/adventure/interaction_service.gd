@@ -19,14 +19,15 @@ func resolve(interaction_id: StringName, verb: StringName) -> String:
 	interaction_resolved.emit(interaction_id, verb, definition.response_text)
 	return definition.response_text
 
-func _conditions_met(conditions: Array[Dictionary]) -> bool:
+func _conditions_met(conditions: Array) -> bool:
 	for condition in conditions:
+		var rule: Dictionary = condition
 		match StringName(condition.get("type", "")):
 			&"flag":
-				if Story.has_flag(StringName(condition.get("id", ""))) != bool(condition.get("value", true)): return false
+				if Story.has_flag(StringName(rule.get("id", ""))) != bool(rule.get("value", true)): return false
 			&"has_item":
-				if Inventory.has_item(StringName(condition.get("id", ""))) != bool(condition.get("value", true)): return false
+				if Inventory.has_item(StringName(rule.get("id", ""))) != bool(rule.get("value", true)): return false
 			_:
-				Log.error("adventure", "Unknown interaction condition", condition)
+				Log.error("adventure", "Unknown interaction condition", rule)
 				return false
 	return true

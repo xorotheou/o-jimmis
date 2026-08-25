@@ -10,6 +10,7 @@ A reusable **Godot 4.x 3D point-and-click adventure engine**. The engine is game
 | 2 — 3D world | Baseline complete | Locations/spawns, navigation-agent player controller, click-to-move raycast, camera zones, interaction points, neutral test environment. |
 | 3 — Adventure systems | Baseline complete | Data-driven interactions, inventory and combinations, branching dialogue, story flags/variables/world state, puzzles, quests. |
 | 4 — Advanced/NPC/AI | Baseline complete | NPC tiers, relationship and compact memory, game clock, versioned saves, fallback-first non-authoritative conversation facade. |
+| 5 — Jimmis vertical slice | In progress | Playable five-location adventure slice, content bootstrap, runtime HUD/debug tools, and save/load regression coverage. |
 | Validation game | Pending | Requires a Godot-enabled runtime smoke-test environment before it can be honestly certified. |
 
 ## Architecture guarantees
@@ -22,7 +23,7 @@ A reusable **Godot 4.x 3D point-and-click adventure engine**. The engine is game
 ## Quick start
 
 1. Install Godot **4.3** (or a compatible Godot 4.x release) and import `project.godot`.
-2. Run the bootstrap scene; add game-owned startup code/resources under `content/`.
+2. Run `res://content/jimmis/bootstrap/jimmis_bootstrap.tscn` for the current vertical slice, or add new game-owned startup code/resources under `content/`.
 3. Register content definitions with their matching autoload service (`World`, `Inventory`, `Interaction`, `Dialogue`, `Puzzles`, `Quests`, or `Npcs`).
 4. Run the checks below before committing.
 
@@ -42,6 +43,7 @@ The Python checks verify structural contracts without a Godot executable. A Godo
 - [IMPLEMENTED_AND_WORKING.md](IMPLEMENTED_AND_WORKING.md) — current verified feature/status list.
 - [CONTENT_GUIDE.md](CONTENT_GUIDE.md) — authoring locations and adventure data.
 - [DEVELOPMENT.md](DEVELOPMENT.md) — conventions and extension workflow.
+- [docs/JIMMIS_VERTICAL_SLICE.md](docs/JIMMIS_VERTICAL_SLICE.md) — Phase 5 slice launch and validation notes.
 - [AI_ARCHITECTURE.md](AI_ARCHITECTURE.md) — safe optional AI integration.
 - [TESTING.md](TESTING.md) — automated and runtime validation plan.
 - [CHANGELOG.md](CHANGELOG.md) — implementation history.

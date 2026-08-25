@@ -13,6 +13,12 @@ func register_profile(profile) -> void:
 	assert(not profile.npc_id.is_empty(), "NPC profile needs an id")
 	_profiles[profile.npc_id] = profile
 
+func get_registered_profile_ids() -> Array[StringName]:
+	var ids: Array[StringName] = []
+	for npc_id in _profiles.keys():
+		ids.append(npc_id)
+	return ids
+
 func change_relationship(npc_id: StringName, delta: int) -> int:
 	assert(_profiles.has(npc_id), "NPC must be registered")
 	var value := clampi(int(_relationships.get(npc_id, 0)) + delta, -100, 100)
@@ -35,6 +41,9 @@ func fallback_line(npc_id: StringName) -> String:
 	var profile: Variant = _profiles.get(npc_id)
 	if profile == null or profile.fallback_lines.is_empty(): return ""
 	return profile.fallback_lines[0]
+
+func get_memories(npc_id: StringName) -> Array:
+	return _memories.get(npc_id, []).duplicate(true)
 
 func snapshot() -> Dictionary:
 	return {"relationships": _relationships.duplicate(true), "memories": _memories.duplicate(true)}
