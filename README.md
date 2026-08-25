@@ -39,6 +39,7 @@ The Python checks verify structural contracts without a Godot executable. A Godo
 ## Documentation
 
 - [ARCHITECTURE.md](ARCHITECTURE.md) — runtime boundaries and service ownership.
+- [IMPLEMENTED_AND_WORKING.md](IMPLEMENTED_AND_WORKING.md) — current verified feature/status list.
 - [CONTENT_GUIDE.md](CONTENT_GUIDE.md) — authoring locations and adventure data.
 - [DEVELOPMENT.md](DEVELOPMENT.md) — conventions and extension workflow.
 - [AI_ARCHITECTURE.md](AI_ARCHITECTURE.md) — safe optional AI integration.
