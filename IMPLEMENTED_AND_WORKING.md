@@ -2,6 +2,10 @@
 
 Living status file for the engine. Keep this current whenever something lands, regresses, or is intentionally left incomplete.
 
+## Last Validated
+
+- August 25, 2026
+
 ## Working
 
 - Project bootstrap starts cleanly and registers the core autoload services.
@@ -54,3 +58,8 @@ Living status file for the engine. Keep this current whenever something lands, r
 - If a feature stops working, move it out of `Working` until it is revalidated.
 - If a partial item is fixed, move it into `Working` and add the validation that proved it.
 - If a new issue is discovered, add it to `Partial` or `Broken` with the smallest useful description.
+- Refresh the file after a run with:
+
+```bash
+python3 scripts/validate_project.py && python3 -m unittest discover -s tests -v && godot --headless --path /home/td/jimmis res://tests/smoke_log_rotation_test.tscn
+```
