@@ -87,6 +87,27 @@ text = "Recent Run Logs"
 layout_mode = 2
 text = "No run logs have been captured yet."
 
+[node name="FilterRow" type="HBoxContainer" parent="LogPanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="RunLogQuery" type="LineEdit" parent="LogPanel/VBox/FilterRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Filter text, scope, scene, or metadata"
+
+[node name="ErrorsOnly" type="CheckButton" parent="LogPanel/VBox/FilterRow"]
+layout_mode = 2
+text = "Errors only"
+
+[node name="ApplyFilter" type="Button" parent="LogPanel/VBox/FilterRow"]
+layout_mode = 2
+text = "Apply"
+
+[node name="ClearFilter" type="Button" parent="LogPanel/VBox/FilterRow"]
+layout_mode = 2
+text = "Clear"
+
 [node name="RefreshRunLogs" type="Button" parent="LogPanel/VBox"]
 layout_mode = 2
 text = "Refresh Logs"

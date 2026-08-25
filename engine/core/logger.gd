@@ -93,6 +93,20 @@ func get_recent_run_summaries() -> Array[Dictionary]:
 			summaries.append(_summarize_run(parsed))
 	return summaries
 
+func get_recent_run_records() -> Array[Dictionary]:
+	var records: Array[Dictionary] = []
+	for path in get_run_log_paths():
+		if not FileAccess.file_exists(path):
+			continue
+		var file := FileAccess.open(path, FileAccess.READ)
+		if file == null:
+			continue
+		var parsed = JSON.parse_string(file.get_as_text())
+		file.close()
+		if parsed is Dictionary:
+			records.append(parsed)
+	return records
+
 func _configure_run_log_dir(run_log_dir: String) -> void:
 	_run_log_dir = run_log_dir if not run_log_dir.is_empty() else "user://logs"
 	_run_log_current_path = _run_log_dir.path_join(RUN_LOG_FILE_CURRENT)
